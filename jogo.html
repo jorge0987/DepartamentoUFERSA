@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Palíndromo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #game {
+      margin: 50px auto;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    #word {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: inline-block;
+    }
+
+    form input[type="text"] {
+      padding: 5px;
+      margin-right: 10px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      font-size: 16px;
+    }
+
+    form button[type="submit"] {
+      padding: 5px 10px;
+      background-color: #007bff;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    form button[type="submit"]:hover {
+      background-color: #0062cc;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="game">
+    <h1>Palíndromo</h1>
+    <p>Tente adivinhar as palavras palíndromas!</p>
+    <div id="word"></div>
+    <form id="form">
+      <input type="text" id="input" placeholder="Digite sua resposta aqui...">
+      <button type="submit">Enviar</button>
+    </form>
+    <p id="result"></p>
+  </div>
+  <script>
+    const words = [
+      "arara",
+      "reviver",
+      "osso",
+      "radar",
+      "asa",
+      "oco",
+      "rever",
+      "natan",
+      "mirim",
+      "asa",
+    ];
+
+    const palindromes = document.getElementById("palindromes");
+    const form = document.getElementById("form");
+    const input = document.getElementById("input");
+    const result = document.getElementById("result");
+
+    // Função que verifica se a palavra é um palíndromo
+    function isPalindrome(word) {
+      const reverseWord = word.split("").reverse().join("");
+      return word === reverseWord;
+    }
+
+    // Função que exibe as palavras palíndromos
+    function displayPalindromes() {
+      palindromes.innerHTML = "";
+      const palindromesList = words.filter(isPalindrome);
+      palindromesList.forEach((word) => {
+        const li = document.createElement("li");
+        li.innerText = word;
+        palindromes.appendChild(li);
+      });
+    }
+
+    // Chama a função displayPalindromes no carregamento da página
+    window.onload = displayPalindromes;
+
+    // Adiciona o evento de submit no form
+    form.addEventListener("submit", (e) => {
+      console.log("submit")
+      e.preventDefault();
+      const inputValue = input.value.toLowerCase();
+      if (inputValue.length === 0) {
+        result.innerText = "Digite uma palavra";
+      } else if (isPalindrome(inputValue)) {
+        result.innerText = `${inputValue} é um palíndromo`;
+      } else {
+        result.innerText = `${inputValue} não é um palíndromo`;
+      }
+      input.value = "";
+    });
+
+  </script>
+</body>
+
+</html>
